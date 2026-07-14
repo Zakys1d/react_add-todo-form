@@ -1,5 +1,3 @@
-import { TodoInfo } from '../TodoInfo/TodoInfo';
-
 interface User {
   id: number;
   name: string;
@@ -17,12 +15,9 @@ interface Todo {
 
 type Props = {
   todos: Todo[];
+  renderTodo: (todo: Todo) => React.ReactNode;
 };
 
-export const TodoList = ({ todos }: Props) => (
-  <section className="TodoList">
-    {todos.map(todo => (
-      <TodoInfo key={todo.id} todo={todo} />
-    ))}
-  </section>
+export const TodoList = ({ todos, renderTodo }: Props) => (
+  <section className="TodoList">{todos.map(todo => renderTodo(todo))}</section>
 );
