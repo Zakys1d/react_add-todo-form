@@ -5,6 +5,8 @@ import { TodoList } from './components/TodoList';
 
 import todosFromServer from './api/todos';
 import usersFromServer from './api/users';
+import { TodoInfo } from './components/TodoInfo';
+import { UserInfo } from './components/UserInfo';
 
 const initialTodos = todosFromServer.map(todo => ({
   ...todo,
@@ -19,8 +21,8 @@ export const App = () => {
   const [titleError, setTitleError] = useState(false);
   const [userError, setUserError] = useState(false);
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
 
     let hasError = false;
 
@@ -76,8 +78,8 @@ export const App = () => {
             placeholder="Enter a title"
             data-cy="titleInput"
             value={title}
-            onChange={e => {
-              setTitle(e.target.value);
+            onChange={event => {
+              setTitle(event.target.value);
               setTitleError(false);
             }}
           />
@@ -92,8 +94,8 @@ export const App = () => {
             id="user"
             data-cy="userSelect"
             value={userId}
-            onChange={e => {
-              setUserId(Number(e.target.value));
+            onChange={event => {
+              setUserId(Number(event.target.value));
               setUserError(false);
             }}
           >
@@ -114,7 +116,16 @@ export const App = () => {
         </button>
       </form>
 
-      <TodoList todos={todos} />
+      <TodoList
+        todos={todos}
+        renderTodo={todo => (
+          <TodoInfo
+            key={todo.id}
+            todo={todo}
+            renderUser={() => <UserInfo user={todo.user} />}
+          />
+        )}
+      />
     </div>
   );
 };
