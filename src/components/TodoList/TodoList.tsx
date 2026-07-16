@@ -1,3 +1,5 @@
+import { TodoInfo } from '../TodoInfo/TodoInfo';
+
 interface User {
   id: number;
   name: string;
@@ -8,16 +10,21 @@ interface User {
 interface Todo {
   id: number;
   title: string;
-  completed: boolean;
   userId: number;
+  completed: boolean;
   user: User;
 }
 
 type Props = {
   todos: Todo[];
-  renderTodo: (todo: Todo) => React.ReactNode;
 };
 
-export const TodoList = ({ todos, renderTodo }: Props) => (
-  <section className="TodoList">{todos.map(todo => renderTodo(todo))}</section>
-);
+export const TodoList = ({ todos }: Props) => {
+  return (
+    <section className="TodoList">
+      {todos.map(todo => (
+        <TodoInfo key={todo.id} todo={todo} />
+      ))}
+    </section>
+  );
+};
