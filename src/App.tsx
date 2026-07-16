@@ -5,8 +5,6 @@ import { TodoList } from './components/TodoList';
 
 import todosFromServer from './api/todos';
 import usersFromServer from './api/users';
-import { TodoInfo } from './components/TodoInfo';
-import { UserInfo } from './components/UserInfo';
 
 const initialTodos = todosFromServer.map(todo => ({
   ...todo,
@@ -116,16 +114,7 @@ export const App = () => {
         </button>
       </form>
 
-      <TodoList
-        todos={todos}
-        renderTodo={todo => (
-          <TodoInfo
-            key={todo.id}
-            todo={todo}
-            renderUser={() => <UserInfo user={todo.user} />}
-          />
-        )}
-      />
+      <TodoList todos={todos} />
     </div>
   );
 };
